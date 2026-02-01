@@ -1,0 +1,16 @@
+{{- if eq .chezmoi.os "linux" -}}
+#!/bin/bash
+set -euo pipefail
+
+TGENV_ROOT="$HOME/.tgenv"
+
+if [ -d "$TGENV_ROOT" ]; then
+    echo "tgenv already installed"
+    exit 0
+fi
+
+echo "Installing tgenv..."
+git clone --depth=1 https://github.com/tgenv/tgenv.git "$TGENV_ROOT"
+
+echo "tgenv installed. Add to PATH: export PATH=\"\$HOME/.tgenv/bin:\$PATH\""
+{{- end }}

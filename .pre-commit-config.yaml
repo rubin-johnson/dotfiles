@@ -1,0 +1,9 @@
+repos:
+  - repo: local
+    hooks:
+      - id: dotfiles-test
+        name: Test dotfiles in Docker
+        entry: bash -c 'docker build -f Dockerfile.test -t dotfiles-test . && docker run --rm dotfiles-test sh -c "chezmoi apply && chezmoi verify"'
+        language: system
+        pass_filenames: false
+        always_run: true

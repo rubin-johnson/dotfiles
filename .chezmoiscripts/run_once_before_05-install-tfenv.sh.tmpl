@@ -1,0 +1,16 @@
+{{- if eq .chezmoi.os "linux" -}}
+#!/bin/bash
+set -euo pipefail
+
+TFENV_ROOT="$HOME/.tfenv"
+
+if [ -d "$TFENV_ROOT" ]; then
+    echo "tfenv already installed"
+    exit 0
+fi
+
+echo "Installing tfenv..."
+git clone --depth=1 https://github.com/tfutils/tfenv.git "$TFENV_ROOT"
+
+echo "tfenv installed. Add to PATH: export PATH=\"\$HOME/.tfenv/bin:\$PATH\""
+{{- end }}
