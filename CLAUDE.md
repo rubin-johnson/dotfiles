@@ -50,7 +50,10 @@ Scripts in `.chezmoiscripts/` run in alphabetical order:
 3. `02-install-pyenv` - Python version manager
 4. `03-install-aws-cli` - AWS CLI v2 (arch-aware)
 5. `04-install-go` - Go + golangci-lint (arch-aware)
-6. `after_install-vim` - Vim plugins (runs after files applied)
+6. `05-install-claude` - Claude Code CLI
+7. `05-install-tfenv` - Terraform version manager
+8. `06-install-tgenv` - Terragrunt version manager
+9. `after_install-vim` - Vim plugins (runs after files applied)
 
 ## Template Variables
 

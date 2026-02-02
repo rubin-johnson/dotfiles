@@ -6,6 +6,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # Set Path
+export PATH="$HOME/.local/bin:$PATH"
 export PATH="/usr/local/bin:$PATH"
 if [ "$(which brew)" ]; then
   export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
@@ -145,6 +146,10 @@ EDITOR=vim
 PATH=$PATH:/sbin/:$HOME/bin/
 export PATH=$PATH:/usr/local/go/bin
 export EDITOR="vim"
+
+# AWS CLI defaults - suppress p10k prompt warnings
+export AWS_DEFAULT_OUTPUT=json
+export AWS_PAGER=""
 
 # History management.
 export HISTSIZE=100000                   # big big history

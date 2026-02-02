@@ -1,16 +1,38 @@
 # Docker aliases
 alias dockerps="docker ps --format '{{.ID}} - {{.Names}} - {{.Status}} - {{.Image}}'"
-alias dockerrmexited="docker rm $(docker ps --all -q -f status=exited)"
-alias dockerrminotags="docker rmi $(docker images -a | grep "^<none>" | awk '{print $3}')"
-alias dockerrmidangling="docker rmi $(docker images -f "dangling=true" -q)"
-alias dockerrmiday="docker rmi $(docker images | grep " [months|days|weeks]* ago" | awk '{print $3}')"
-alias dockerrmiweek="docker rmi $(docker images | grep " [months|weeks]* ago" | awk '{print $3}')"
-alias dockerrmimonth="docker rmi $(docker images | grep " [months]* ago" | awk '{print $3}')"
-alias dockerrminotlatest="docker rmi $(docker images | grep -v "latest" | awk '{print $3}')"
-alias ghreadmerender="docker run -it --rm -p 9000:8080 -v ${PWD}:/data -v ~/.grip:/.grip mbentley/grip --context=username/repo README.md 0.0.0.0:8080"
-alias markserv="docker run -it --rm --name markserv -p 9000:3080 -v ${PWD}:/data thomsch98/markserv"
+alias ghreadmerender="docker run -it --rm -p 9000:8080 -v \${PWD}:/data -v ~/.grip:/.grip mbentley/grip --context=username/repo README.md 0.0.0.0:8080"
+alias markserv="docker run -it --rm --name markserv -p 9000:3080 -v \${PWD}:/data thomsch98/markserv"
 alias dive="docker run --rm -it --name dive -v /var/run/docker.sock:/var/run/docker.sock wagoodman/dive:latest"
 alias dockerlogin='cat ~/.githubtoken | docker login ghcr.io -u stricklin --password-stdin'
+
+# Docker cleanup functions (evaluate at call time, not shell init)
+dockerrmexited() {
+	docker rm $(docker ps --all -q -f status=exited)
+}
+
+dockerrminotags() {
+	docker rmi $(docker images -a --format '{{.ID}}' --filter "dangling=true")
+}
+
+dockerrmidangling() {
+	docker rmi $(docker images -f "dangling=true" -q)
+}
+
+dockerrmiday() {
+	docker image prune -a --filter "until=24h" --force
+}
+
+dockerrmiweek() {
+	docker image prune -a --filter "until=168h" --force
+}
+
+dockerrmimonth() {
+	docker image prune -a --filter "until=720h" --force
+}
+
+dockerrminotlatest() {
+	docker rmi $(docker images --format '{{.Repository}}:{{.Tag}} {{.ID}}' | grep -v ':latest ' | awk '{print $2}')
+}
 
 # Docker functions
 dockerstats() {
