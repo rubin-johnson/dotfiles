@@ -48,7 +48,6 @@
 ## Problem-Solving
 - Start with most likely cause, not comprehensive lists
 - Ask clarifying questions before diving into research
-- Estimate time/complexity: "5 min quick win" vs "this is a rabbit hole"
 - Flag tangents: "This is adjacent—bookmark for later?"
 
 ## Preferences

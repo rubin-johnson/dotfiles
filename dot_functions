@@ -203,30 +203,3 @@ function kccd() {
     kitchen destroy all -c
 }
 
-# Claude Code
-claude() {
-    local args=()
-    local prompt=""
-    local has_prompt=false
-
-    # Parse args to find the prompt (last non-flag argument)
-    for arg in "$@"; do
-        if [[ "$arg" =~ ^- ]]; then
-            args+=("$arg")
-        else
-            if [ "$has_prompt" = true ]; then
-                # Already found prompt, this is another positional arg
-                args+=("$prompt")
-            fi
-            prompt="$arg"
-            has_prompt=true
-        fi
-    done
-
-    # If we found a prompt, prepend ultrathink
-    if [ "$has_prompt" = true ]; then
-        args+=("ultrathink: $prompt")
-    fi
-
-    command claude "${args[@]}"
-}
