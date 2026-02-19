@@ -12,7 +12,8 @@ sudo tee "$MANAGED_SETTINGS" > /dev/null << 'EOF'
   "deniedMcpServers": [
     { "serverName": "claude.ai EVO" },
     { "serverName": "claude.ai Notion" },
-    { "serverName": "claude.ai Atlassian" }
+    { "serverName": "claude.ai Atlassian" },
+    { "serverName": "claude.ai Slack" }
   ]
 }
 EOF
