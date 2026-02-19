@@ -41,7 +41,9 @@ PIDS=$(get_orphaned_pids)
 
 if [ -z "$PIDS" ]; then
     log "No orphaned processes found"
-    echo '{"hookSpecificOutput":{"hookEventName":"'"$HOOK_EVENT"'","additionalContext":"Cleanup: no orphaned Claude processes found"}}'
+    if [ "$HOOK_EVENT" = "SessionStart" ]; then
+        echo '{"hookSpecificOutput":{"hookEventName":"SessionStart","additionalContext":"Cleanup: no orphaned Claude processes found"}}'
+    fi
     exit 0
 fi
 

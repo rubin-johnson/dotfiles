@@ -18,7 +18,8 @@
     "elements-of-style@superpowers-marketplace": true,
     "superpowers@superpowers-marketplace": true,
     "superpowers-developing-for-claude-code@superpowers-marketplace": true,
-    "claude-mem@thedotmack": true
+    "claude-mem@thedotmack": true,
+    "retro@retro-dev": true
   },
   "skipDangerousModePermissionPrompt": true,
   "hooks": {
