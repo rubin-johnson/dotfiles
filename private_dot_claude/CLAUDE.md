@@ -260,6 +260,14 @@ Don't struggle silently. Escalating early saves more time than grinding.
 
 ---
 
+## Dotfiles & Chezmoi
+
+- Dotfiles repo: `~/.local/share/chezmoi` (remote: `github.com:rubin-johnson/dotfiles.git`, branch: `master`)
+- When you modify any file managed by chezmoi (e.g. `~/.claude/CLAUDE.md`, `~/.aliases`, `~/.zshrc`), **immediately** run `chezmoi re-add <file>`, then commit and push the dotfiles repo
+- Commit only the files you changed — don't sweep in unrelated unstaged changes
+
+---
+
 ## Data Locations
 
 - **claude-mem database**: `~/.claude-mem/claude-mem.db` (SQLite). To delete observations: `python3 -c "import sqlite3; conn = sqlite3.connect('$HOME/.claude-mem/claude-mem.db'); conn.execute('DELETE FROM observations WHERE id IN (...)'); conn.commit()"`
