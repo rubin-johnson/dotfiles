@@ -3,9 +3,8 @@
     "BASH_DEFAULT_TIMEOUT_MS": "1800000",
     "BASH_MAX_TIMEOUT_MS": "7200000"
   },
-  "model": "opus",
   "enabledPlugins": {
-    "context7@claude-plugins-official": true,
+    "context7@claude-plugins-official": false,
     "ralph-loop@claude-plugins-official": false,
     "feature-dev@claude-plugins-official": true,
     "code-simplifier@claude-plugins-official": true,

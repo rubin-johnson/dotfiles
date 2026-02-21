@@ -10,10 +10,10 @@ sudo mkdir -p /etc/claude-code
 sudo tee "$MANAGED_SETTINGS" > /dev/null << 'EOF'
 {
   "deniedMcpServers": [
-    { "serverName": "claude.ai EVO" },
-    { "serverName": "claude.ai Notion" },
-    { "serverName": "claude.ai Atlassian" },
-    { "serverName": "claude.ai Slack" }
+    { "serverUrl": "https://mcp-proxy.anthropic.com/v1/mcp/mcpsrv_01NTDKyCQ2557s2pCzBbBUuR" },
+    { "serverUrl": "https://mcp-proxy.anthropic.com/v1/mcp/mcpsrv_01NJfwvBYFHUKhUuAzTKB5UM" },
+    { "serverUrl": "https://mcp-proxy.anthropic.com/v1/mcp/mcpsrv_0163jnk1WuQisDNR1CCaGj8p" },
+    { "serverUrl": "https://mcp-proxy.anthropic.com/v1/mcp/mcpsrv_01P4yjYQAT9tvXRNfMtE5aoR" }
   ]
 }
 EOF
