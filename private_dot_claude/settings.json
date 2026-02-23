@@ -1,26 +1,9 @@
 {
+  "model": "sonnet",
   "env": {
     "BASH_DEFAULT_TIMEOUT_MS": "1800000",
     "BASH_MAX_TIMEOUT_MS": "7200000"
   },
-  "enabledPlugins": {
-    "context7@claude-plugins-official": false,
-    "ralph-loop@claude-plugins-official": false,
-    "feature-dev@claude-plugins-official": true,
-    "code-simplifier@claude-plugins-official": true,
-    "commit-commands@claude-plugins-official": true,
-    "playwright@claude-plugins-official": false,
-    "Notion@claude-plugins-official": false,
-    "hookify@claude-plugins-official": true,
-    "claude-md-management@claude-plugins-official": true,
-    "double-shot-latte@superpowers-marketplace": true,
-    "elements-of-style@superpowers-marketplace": true,
-    "superpowers@superpowers-marketplace": true,
-    "superpowers-developing-for-claude-code@superpowers-marketplace": true,
-    "claude-mem@thedotmack": true,
-    "retro@retro-dev": true
-  },
-  "skipDangerousModePermissionPrompt": true,
   "hooks": {
     "SessionStart": [
       {
@@ -55,5 +38,23 @@
         ]
       }
     ]
-  }
+  },
+  "enabledPlugins": {
+    "context7@claude-plugins-official": false,
+    "ralph-loop@claude-plugins-official": false,
+    "feature-dev@claude-plugins-official": true,
+    "code-simplifier@claude-plugins-official": true,
+    "commit-commands@claude-plugins-official": true,
+    "playwright@claude-plugins-official": false,
+    "Notion@claude-plugins-official": false,
+    "hookify@claude-plugins-official": true,
+    "claude-md-management@claude-plugins-official": true,
+    "double-shot-latte@superpowers-marketplace": true,
+    "elements-of-style@superpowers-marketplace": true,
+    "superpowers@superpowers-marketplace": true,
+    "superpowers-developing-for-claude-code@superpowers-marketplace": true,
+    "claude-mem@thedotmack": true,
+    "retro@retro-dev": true
+  },
+  "skipDangerousModePermissionPrompt": true
 }
