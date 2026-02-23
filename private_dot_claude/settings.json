@@ -46,7 +46,7 @@
     "code-simplifier@claude-plugins-official": true,
     "commit-commands@claude-plugins-official": true,
     "playwright@claude-plugins-official": false,
-    "Notion@claude-plugins-official": false,
+    "Notion@claude-plugins-official": true,
     "hookify@claude-plugins-official": true,
     "claude-md-management@claude-plugins-official": true,
     "double-shot-latte@superpowers-marketplace": true,
