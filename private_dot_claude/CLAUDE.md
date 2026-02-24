@@ -191,6 +191,41 @@ Don't struggle silently. Escalating early saves more time than grinding.
 
 ---
 
+## Token Efficiency (Always Follow)
+
+**Full Guidelines**: `~/.claude/token-efficiency.md` - read this file at session start
+
+**Core principles that MUST be followed:**
+
+### Index-First Architecture
+- Search/index → filter → fetch full details (never fetch without filtering first)
+- Memory searches: use search() for IDs, then get_observations() only for filtered results
+- Trust semantic indexes (titles, types, files) — only fetch full details when you need implementation/rationale
+
+### Context Loading Strategy
+- **Session warmup budget**: <2000 tokens
+  - Git status, memory search (project + last 7 days), check scratch file
+  - Do NOT load: full file trees, all history, exhaustive exploration
+- **Incremental loading**: Load minimum to validate hypothesis, expand only if needed
+- **Tool selection**: Known paths → Read/Glob; broad exploration → Task/Explore; past decisions → memory search
+
+### Cost Control Triggers
+- >20k tokens without progress → ask if approach is right
+- >50k tokens in single turn → break into subagents
+- Same approach tried 3+ times → escalate or pivot
+- Need >5 Grep/Glob rounds → use Task/Explore agent
+
+### Anti-Patterns to Avoid
+- ❌ Reading entire files when grep would answer
+- ❌ Exhaustive loading ("let me read all X to understand")
+- ❌ Re-reading same file multiple times
+- ❌ Over-exploration without specific hypothesis
+- ❌ Wrong tool (Task/Explore for known paths, Read for discovery)
+
+**The efficiency mindset**: Precision over exhaustiveness. Incremental over bulk. Reuse over re-derivation. The best token is the one you didn't spend.
+
+---
+
 ## Code Quality (Non-Negotiable)
 
 - All code must read like a human wrote it—no obvious AI patterns, excessive comments, or over-engineered abstractions
