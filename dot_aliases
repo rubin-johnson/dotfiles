@@ -44,6 +44,7 @@ alias tg='terragrunt'
 
 ## claude
 alias yolo='claude --dangerously-skip-permissions'
+alias tokens='~/.claude/bin/token-report'
 
 ## misc
 alias :q="exit"
@@ -52,40 +53,6 @@ alias duh="du -h --max-depth=1 | sort -n"
 alias weather="curl http://wttr.in/portland"
 alias pbcopy='xclip -selection clipboard'
 alias pbpaste='xclip -selection clipboard -o'
-copy() { cat "$1" | xclip -selection clipboard; }
-paste() {
-  local mode="safe"
-  # TODO(human): Parse flags and set mode
-  # Implement flag parsing for -a (append) and -f (force overwrite)
-  # Set mode to "append", "force", or leave as "safe" (default)
-  # After parsing, shift so $1 points to the filename
-  # Hint: getopts or a while/case loop both work here
-
-  local target="$1"
-  if [[ -z "$target" ]]; then
-    echo "Usage: paste [-a|-f] <file>" >&2
-    return 1
-  fi
-  if [[ -e "$target" ]]; then
-    local filetype
-    filetype=$(file --brief --mime-type "$target")
-    if [[ "$filetype" != text/* ]]; then
-      echo "paste: $target is not a text file ($filetype)" >&2
-      return 1
-    fi
-  fi
-  case "$mode" in
-    safe)
-      if [[ -e "$target" ]]; then
-        echo "paste: $target already exists (use -f to overwrite, -a to append)" >&2
-        return 1
-      fi
-      xclip -selection clipboard -o > "$target"
-      ;;
-    force)  xclip -selection clipboard -o > "$target" ;;
-    append) xclip -selection clipboard -o >> "$target" ;;
-  esac
-}
 
 ## git functions and aliases
 alias cleanbranches="git branch --merge | egrep -v '\''(^\*|master)'\'' | xargs git branch -d"
