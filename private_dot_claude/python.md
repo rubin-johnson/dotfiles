@@ -1,8 +1,3 @@
----
-inclusion: manual
-contextKey: python
----
-
 # Python Toolchain Requirements
 
 ## Package & Environment Management — NO EXCEPTIONS

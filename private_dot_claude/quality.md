@@ -1,8 +1,3 @@
----
-inclusion: manual
-contextKey: quality
----
-
 # Quality Standards
 
 **You are not done until the problem is actually solved. Not "probably solved." Not "solved for the happy path." Actually solved.**
