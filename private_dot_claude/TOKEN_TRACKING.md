@@ -1,6 +1,23 @@
 # Automated Token Usage Tracking
 
-**Status**: Automatically captures token usage at the end of every Claude Code session.
+**Status**: Automatically captures session metadata. Manual token logging required.
+
+## Quick Reference
+
+```bash
+# At end of session, log tokens
+token-log 54629 "Brief description of work"
+
+# View reports
+tokens summary          # Overall stats
+tokens daily            # Last 30 days
+tokens by-category      # Usage by category
+tokens by-repo          # Usage by repository
+tokens trends           # 7-day rolling average
+
+# Direct SQL query
+sqlite3 ~/.claude/token-usage.db "SELECT * FROM sessions ORDER BY date DESC LIMIT 10"
+```
 
 ## How It Works
 
@@ -132,18 +149,31 @@ WHERE notes LIKE '%strategy%'
 GROUP BY notes;
 ```
 
-## Current Limitations
+## Manual Token Logging (Current Workflow)
 
-**Token data availability**: The session-end hook attempts to read `$CLAUDE_SESSION_TOKENS` from the environment. If Claude Code doesn't expose this:
+**Status**: Automatic token capture is not yet working. Use manual logging for now.
 
-- Hook will still log session metadata (repo, category, etc.)
-- Token counts will be 0 until we add manual tracking
-- Can be enhanced later with transcript parsing
+**At the end of each session**, note the token count from the last system warning and log it:
 
-**Workaround if tokens show as 0**:
-1. Check if Claude Code exposes token usage in API responses
-2. Parse session transcripts for token counts
-3. Manually add token data via SQL updates
+```bash
+# View current token usage in session (look for system-reminder with token count)
+# Then log it manually:
+token-log <tokens> [optional notes]
+
+# Examples:
+token-log 54629
+token-log 54629 "Setting up token tracking system"
+token-log 125000 "CPE-5208 bulk updates across 40 repos"
+```
+
+The session-end hook still captures:
+- Timestamp, working directory, git repo/branch
+- Auto-categorization
+- Creates database entry automatically
+
+You just need to add the token count afterward.
+
+**Future enhancement**: Parse session transcripts or API responses to automate this fully.
 
 ## Maintenance
 

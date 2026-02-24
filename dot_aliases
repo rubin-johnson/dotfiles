@@ -45,6 +45,7 @@ alias tg='terragrunt'
 ## claude
 alias yolo='claude --dangerously-skip-permissions'
 alias tokens='~/.claude/bin/token-report'
+alias token-log='~/.claude/bin/token-log'
 
 ## misc
 alias :q="exit"
