@@ -46,6 +46,7 @@ alias tg='terragrunt'
 alias yolo='claude --dangerously-skip-permissions'
 alias tokens='~/.claude/bin/token-report'
 alias token-log='~/.claude/bin/token-log'
+alias claude-drift='chezmoi verify && echo "Config in sync" || echo "Config drift detected — run chezmoi diff"'
 
 ## misc
 alias :q="exit"

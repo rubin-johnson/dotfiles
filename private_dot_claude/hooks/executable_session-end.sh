@@ -86,5 +86,19 @@ INSERT INTO sessions (
 );
 EOF
 
+# Nudge retro review if enough unreviewed entries have accumulated
+RETRO_DB="$HOME/.retro/retro.db"
+if [ -f "$RETRO_DB" ]; then
+    LAST_REVIEWED=$(sqlite3 "$RETRO_DB" "SELECT value FROM metadata WHERE key = 'last_reviewed_at'" 2>/dev/null || echo "")
+    if [ -n "$LAST_REVIEWED" ]; then
+        UNREVIEWED=$(sqlite3 "$RETRO_DB" "SELECT COUNT(*) FROM entries WHERE created_at > '$LAST_REVIEWED'" 2>/dev/null || echo "0")
+    else
+        UNREVIEWED=$(sqlite3 "$RETRO_DB" "SELECT COUNT(*) FROM entries" 2>/dev/null || echo "0")
+    fi
+    if [ "$UNREVIEWED" -ge 5 ] 2>/dev/null; then
+        echo "retro: $UNREVIEWED unreviewed entries — run /retro:review" >&2
+    fi
+fi
+
 # Silent success - no output unless there's an error
 exit 0

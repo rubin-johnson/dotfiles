@@ -54,7 +54,11 @@
     "superpowers@superpowers-marketplace": true,
     "superpowers-developing-for-claude-code@superpowers-marketplace": true,
     "claude-mem@thedotmack": true,
-    "retro@retro-dev": true
+    "retro@retro-dev": true,
+    "explanatory-output-style@claude-plugins-official": true
   },
-  "skipDangerousModePermissionPrompt": true
+  "skipDangerousModePermissionPrompt": true,
+  "statusLine": {
+    "command": "$HOME/.claude/statusline-command.sh"
+  }
 }
