@@ -143,3 +143,8 @@ if [ -f ~/.functions ]; then
 fi
 
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+# Ollama: connect to Windows host instance (dynamic IP for WSL2 NAT mode)
+export OLLAMA_HOST="http://$(ip route show default | awk '{print $3}'):11434"
+
+alias claude-mem='/home/rujohnson/.bun/bin/bun "/home/rujohnson/.claude/plugins/marketplaces/thedotmack/plugin/scripts/worker-service.cjs"'

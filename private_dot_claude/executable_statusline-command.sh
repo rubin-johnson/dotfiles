@@ -8,7 +8,6 @@ model=$(echo "$input" | jq -r '.model.display_name // empty')
 used_pct=$(echo "$input" | jq -r '.context_window.used_percentage // empty')
 total_in=$(echo "$input" | jq -r '.context_window.total_input_tokens // 0')
 total_out=$(echo "$input" | jq -r '.context_window.total_output_tokens // 0')
-cost=$(echo "$input" | jq -r '.cost.total_cost_usd // 0')
 
 # Shorten home directory
 display_cwd="${cwd/#$HOME/\~}"
@@ -22,9 +21,6 @@ elif (( total_tokens >= 1000 )); then
 else
   tokens_fmt="${total_tokens}"
 fi
-
-# Format cost
-cost_fmt=$(printf '$%.2f' "$cost")
 
 # Colors
 RST=$'\033[0m'
@@ -49,4 +45,4 @@ if [[ -n "$used_pct" ]]; then
   ctx_part="${DIM}|${RST} ${ctx_c}ctx:${pct_int}%${RST} "
 fi
 
-echo "${BOLD}${CYAN}${display_cwd}${RST}  ${YELLOW}${model}${RST}  ${ctx_part}${DIM}|${RST} ${tokens_fmt} ${DIM}|${RST} ${GREEN}${cost_fmt}${RST}"
+echo "${BOLD}${CYAN}${display_cwd}${RST}  ${YELLOW}${model}${RST}  ${ctx_part}${DIM}|${RST} ${tokens_fmt}"

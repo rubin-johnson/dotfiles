@@ -202,4 +202,3 @@ function kccd() {
     kitchen create ${DISTROS} -c && kitchen converge ${DISTROS}
     kitchen destroy all -c
 }
-
