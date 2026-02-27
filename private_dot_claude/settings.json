@@ -1,9 +1,9 @@
 {
-  "model": "sonnet",
   "env": {
     "BASH_DEFAULT_TIMEOUT_MS": "1800000",
     "BASH_MAX_TIMEOUT_MS": "7200000"
   },
+  "model": "sonnet",
   "hooks": {
     "SessionStart": [
       {
@@ -39,6 +39,10 @@
       }
     ]
   },
+  "statusLine": {
+    "type": "command",
+    "command": "$HOME/.claude/statusline-command.sh"
+  },
   "enabledPlugins": {
     "context7@claude-plugins-official": false,
     "ralph-loop@claude-plugins-official": false,
@@ -55,12 +59,8 @@
     "superpowers-developing-for-claude-code@superpowers-marketplace": true,
     "claude-mem@thedotmack": true,
     "retro@retro-dev": true,
-    "explanatory-output-style@claude-plugins-official": true,
+    "explanatory-output-style@claude-plugins-official": false,
     "automate@rubin-johnson": true
   },
-  "skipDangerousModePermissionPrompt": true,
-  "statusLine": {
-    "type": "command",
-    "command": "$HOME/.claude/statusline-command.sh"
-  }
+  "skipDangerousModePermissionPrompt": true
 }
