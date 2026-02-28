@@ -89,6 +89,14 @@
 
 ---
 
+## Documentation & Usability
+
+- **Always update README.md** when you change a CLI interface, add a command, change an option name, or add user-facing functionality — in the same commit, not as a follow-up
+- **Always add a smoke test** for any CLI command or entry point: invoke it via subprocess as a human would (not via CliRunner or mock), with a fake external dependency in PATH if needed
+- If a human couldn't run the command successfully after your change, the smoke test should catch it before merge
+
+---
+
 ## Commits & Git Workflow
 
 - **NEVER commit without explicit approval**
