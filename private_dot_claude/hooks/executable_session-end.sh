@@ -133,6 +133,18 @@ EOF
     fi
 fi
 
+# Check for chezmoi drift and uncommitted dotfiles changes
+DOTFILES="$HOME/dotfiles"
+if command -v chezmoi &>/dev/null && ! chezmoi verify 2>/dev/null; then
+    echo "dotfiles: chezmoi drift detected — run 'chezmoi re-add <file>'" >&2
+fi
+if [ -d "$DOTFILES/.git" ]; then
+    DOTFILES_DIRTY=$(git -C "$DOTFILES" status --porcelain -- private_dot_claude/ 2>/dev/null | wc -l | tr -d ' ')
+    if [ "$DOTFILES_DIRTY" -gt 0 ]; then
+        echo "dotfiles: $DOTFILES_DIRTY uncommitted change(s) in private_dot_claude/ — commit before they're lost" >&2
+    fi
+fi
+
 # Nudge retro review if enough unreviewed entries have accumulated
 RETRO_DB="$HOME/.retro/retro.db"
 if [ -f "$RETRO_DB" ]; then
