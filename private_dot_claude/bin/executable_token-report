@@ -141,8 +141,77 @@ LIMIT 30;
 EOF
         ;;
 
+    credits)
+        ACCOUNT="${2:-work}"
+        echo "=== API Credits: $ACCOUNT ==="
+        echo
+
+        # Check if credit_events table exists and has data
+        HAS_EVENTS=$(sqlite3 "$DB" "SELECT COUNT(*) FROM credit_events WHERE account = '$ACCOUNT';" 2>/dev/null || echo "0")
+        if [ "$HAS_EVENTS" -eq 0 ]; then
+            echo "No credit events recorded for '$ACCOUNT'."
+            echo "Run: credits-add <amount> [$ACCOUNT]"
+            exit 0
+        fi
+
+        echo "--- Credit History ---"
+        sqlite3 -column -header "$DB" <<EOF
+SELECT date, printf('\$%.2f', amount_usd) as amount, notes
+FROM credit_events WHERE account = '$ACCOUNT'
+ORDER BY date DESC LIMIT 10;
+EOF
+        echo
+
+        # Balance summary
+        echo "--- Balance ---"
+        sqlite3 -column -header "$DB" <<EOF
+SELECT
+    printf('\$%.2f', SUM(ce.amount_usd)) as total_loaded,
+    printf('\$%.2f', COALESCE((SELECT SUM(cost_usd) FROM sessions WHERE account = '$ACCOUNT' AND cost_usd IS NOT NULL), 0)) as total_spent,
+    printf('\$%.2f', SUM(ce.amount_usd) - COALESCE((SELECT SUM(cost_usd) FROM sessions WHERE account = '$ACCOUNT' AND cost_usd IS NOT NULL), 0)) as balance_remaining
+FROM credit_events ce WHERE ce.account = '$ACCOUNT';
+EOF
+        echo
+
+        echo "--- Forecast ---"
+        # Two-step aggregation: sum cost per day first, then average those daily totals.
+        # This treats days with zero spend as absent (excluded), not zero — giving a
+        # "when you work, how much do you spend?" rate rather than a calendar-day rate.
+        DAILY_AVG=$(sqlite3 "$DB" <<EOF
+SELECT COALESCE(AVG(daily_cost), 0)
+FROM (
+    SELECT date, SUM(cost_usd) as daily_cost
+    FROM sessions
+    WHERE account = '$ACCOUNT'
+      AND cost_usd IS NOT NULL
+      AND date >= date('now', '-7 days')
+    GROUP BY date
+);
+EOF
+        )
+
+        BALANCE=$(sqlite3 "$DB" <<EOF
+SELECT COALESCE(SUM(ce.amount_usd), 0) - COALESCE(
+    (SELECT SUM(cost_usd) FROM sessions WHERE account = '$ACCOUNT' AND cost_usd IS NOT NULL), 0)
+FROM credit_events ce WHERE ce.account = '$ACCOUNT';
+EOF
+        )
+
+        if [[ -z "$DAILY_AVG" ]] || (( $(echo "$DAILY_AVG == 0" | bc -l) )); then
+            echo "Burn rate: no recent sessions (7d avg)"
+        else
+            DAYS_REMAINING=$(echo "scale=1; $BALANCE / $DAILY_AVG" | bc -l)
+            DAYS_INT=$(echo "$DAYS_REMAINING" | cut -d. -f1)
+            RATE_FMT=$(printf '$%.2f' "$DAILY_AVG")
+            echo "Burn rate: ${RATE_FMT}/day (7d avg, active days only) — ~${DAYS_REMAINING} days remaining"
+            if (( DAYS_INT < 7 )) && (( DAYS_INT >= 0 )); then
+                echo "WARNING: less than a week of credits at current pace"
+            fi
+        fi
+        ;;
+
     *)
-        echo "Usage: token-report [summary|daily|weekly|by-repo|by-category|recent|trends]"
+        echo "Usage: token-report [summary|daily|weekly|by-repo|by-category|recent|trends|credits]"
         echo
         echo "Available reports:"
         echo "  summary      - Overall statistics"
@@ -152,6 +221,7 @@ EOF
         echo "  by-category  - Token usage per category"
         echo "  recent       - Last 20 sessions"
         echo "  trends       - 7-day rolling average"
+        echo "  credits      - API credit balance and burn rate [account]"
         exit 1
         ;;
 esac

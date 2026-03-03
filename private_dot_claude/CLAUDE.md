@@ -179,6 +179,8 @@
 - Periodic: `/retro:review` — surface patterns, generate prevention rules
 - Config drift: `chezmoi verify` — exit 0 = config matches source
 - When updating this file: `chezmoi re-add ~/.claude/CLAUDE.md` then commit dotfiles
+- When I correct a mistake mid-session, offer: "Should I add a rule to CLAUDE.md to prevent this?" — propose the minimal rule text; wait for approval before writing
+- Before adding any rule here, check for duplicates or contradictions with existing rules; update existing rather than adding new
 
 ---
 

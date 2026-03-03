@@ -37,6 +37,17 @@
           }
         ]
       }
+    ],
+    "PreCompact": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.claude/hooks/pre-compact.sh",
+            "timeout": 30
+          }
+        ]
+      }
     ]
   },
   "statusLine": {
