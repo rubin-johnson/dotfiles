@@ -101,7 +101,7 @@
 
 - In interactive sessions: show files changed, proposed commit message, and tests before committing; wait for "yes" / "go" / "commit it"
 - In autonomous agent sessions (`--dangerously-skip-permissions`): commit freely when tests pass — do not ask for confirmation
-- Default branch: main; never push directly to main
+- Default branch: main; confirm it's the right call before pushing directly to main
 - Commit messages: concise, imperative mood; **no AI co-author attribution**
 
 ## Versioning
