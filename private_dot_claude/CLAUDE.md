@@ -99,9 +99,8 @@
 
 ## Commits & Git Workflow
 
-- **NEVER commit without explicit approval**
-- Before committing, show: files changed (summary), proposed commit message, any tests added/modified
-- Wait for "yes" / "go" / "commit it" before executing
+- In interactive sessions: show files changed, proposed commit message, and tests before committing; wait for "yes" / "go" / "commit it"
+- In autonomous agent sessions (`--dangerously-skip-permissions`): commit freely when tests pass — do not ask for confirmation
 - Default branch: main; never push directly to main
 - Commit messages: concise, imperative mood; **no AI co-author attribution**
 
