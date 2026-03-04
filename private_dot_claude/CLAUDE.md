@@ -104,6 +104,14 @@
 - Default branch: main; never push directly to main
 - Commit messages: concise, imperative mood; **no AI co-author attribution**
 
+## Versioning
+
+- **All projects use semantic versioning**: `MAJOR.MINOR.PATCH` (semver.org)
+- First release is always `0.0.1`; `0.x` signals pre-stable API
+- Bump PATCH for bug fixes, BUMP MINOR for new features, BUMP MAJOR for breaking changes
+- Tag releases with `git tag v0.0.1` and push tags: `git push --tags`
+- Maintain a `CHANGELOG.md` or release notes at each tagged release
+
 **Full Details**: `~/.claude/development-guidelines.md` — read when discussing git workflow, PRs, or refactoring
 
 ---
