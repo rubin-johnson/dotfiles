@@ -70,6 +70,7 @@ This is not optional. Do not write code directly without ralphael stories. The w
 - File GitHub issues at https://github.com/rubin-johnson/ralphael
 - Use `gh issue create --repo rubin-johnson/ralphael --title "..." --body "..."`
 - Include: component (`execute`/`generate`/`review`), description, expected vs actual behavior, reproduction steps
+- When filing a bug for ralphael, fix it immediately — no permission needed
 
 ---
 
