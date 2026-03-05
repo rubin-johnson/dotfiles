@@ -60,6 +60,12 @@ This is not optional. Do not write code directly without ralphael stories. The w
 
 **Trivial exceptions** (no ralphael needed): editing CLAUDE.md, README-only changes, fixing a typo in a comment, adding a missing import that breaks the build.
 
+**Always include a test** that would have caught the bug when fixing bugs via ralphael stories.
+
+**Tooling:**
+- ralphael binary: `~/.local/bin/ralphael` (installed via `GOBIN=~/.local/bin go install .` from `~/code/personal/ralphael`)
+- After any change to ralphael source, reinstall: `cd ~/code/personal/ralphael && GOBIN=~/.local/bin go install .`
+
 **Filing ralphael bugs:**
 - File GitHub issues at https://github.com/rubin-johnson/ralphael
 - Use `gh issue create --repo rubin-johnson/ralphael --title "..." --body "..."`
