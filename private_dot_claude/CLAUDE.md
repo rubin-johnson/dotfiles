@@ -60,9 +60,6 @@ This is not optional. Do not write code directly without ralphael stories. The w
 
 **Trivial exceptions** (no ralphael needed): editing CLAUDE.md, README-only changes, fixing a typo in a comment, adding a missing import that breaks the build.
 
-**Tooling:**
-- ralphael is a Go binary; if `which ralphael` resolves to `~/.local/bin/ralphael`, that is the wrong one — find and use the Go build
-
 **Filing ralphael bugs:**
 - File GitHub issues at https://github.com/rubin-johnson/ralphael
 - Use `gh issue create --repo rubin-johnson/ralphael --title "..." --body "..."`
