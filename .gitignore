@@ -5,3 +5,6 @@ mac/.m2/
 # claude-mem auto-generated context files (root CLAUDE.md is tracked; subdirectory ones are not)
 **/CLAUDE.md
 !CLAUDE.md
+
+# ralphael working directory
+.ralphael/
