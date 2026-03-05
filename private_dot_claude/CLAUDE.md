@@ -78,6 +78,16 @@
 
 ---
 
+## Go
+
+- Use `go mod` for module management; always commit `go.mod` and `go.sum`
+- Run `go vet ./...` before `golangci-lint run`; both before committing
+- Error handling: always check errors, wrap with `fmt.Errorf("context: %w", err)`
+
+**Full Details**: `~/.claude/go.md` — read before any Go work
+
+---
+
 ## Code Quality
 
 - All code must read like a human wrote it — no obvious AI patterns, excessive comments, or over-engineered abstractions
