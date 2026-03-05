@@ -44,6 +44,31 @@
 - Prefer parallel execution when dispatching agents or running independent tasks
 - When given a written plan, use **Parallel Session** execution (open new session, use `superpowers:executing-plans`) unless told otherwise
 
+## Ralphael (MANDATORY for all code work)
+
+**ANY request that involves a feature, enhancement, bugfix, new test, refactor, or any code change MUST go through ralphael. No exceptions.**
+
+This is not optional. Do not write code directly without ralphael stories. The workflow is:
+1. `ralphael generate <notes-file>` — generates a plan with stories
+2. Review the plan (edit if needed)
+3. `ralphael execute <plan.md> <target-repo>` — executes all stories in parallel waves
+
+**Do NOT:**
+- Write implementation code inline in the conversation
+- Edit source files directly for anything beyond trivial config/docs fixes
+- Use agents, Edit, or Write tools to implement features without first generating a ralphael plan
+
+**Trivial exceptions** (no ralphael needed): editing CLAUDE.md, README-only changes, fixing a typo in a comment, adding a missing import that breaks the build.
+
+**Tooling:**
+- Always use the **Go version** of ralphael — the Python version (`~/.local/bin/ralphael`) is outdated and must not be used
+- Go binary location: check `~/go/bin/ralphael` or wherever installed; confirm with `ralphael --version` that it is the Go build
+
+**Filing ralphael bugs:**
+- File GitHub issues at https://github.com/rubin-johnson/ralphael
+- Use `gh issue create --repo rubin-johnson/ralphael --title "..." --body "..."`
+- Include: component (`execute`/`generate`/`review`), description, expected vs actual behavior, reproduction steps
+
 ---
 
 ## Model Selection & Token Efficiency
