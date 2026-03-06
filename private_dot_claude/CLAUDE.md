@@ -74,8 +74,7 @@ If you are ever tempted to rewrite ralphael in another language, the question to
 
 **Tooling:**
 - Source: `~/code/personal/ralphael`
-- Install (dev mode): `cd ~/code/personal/ralphael && uv pip install -e .`
-- After any change to ralphael source, reinstall: `cd ~/code/personal/ralphael && uv pip install -e .`
+- Install/reinstall: `cd ~/code/personal/ralphael && uv tool install . --force`
 - Run tests: `cd ~/code/personal/ralphael && uv run pytest`
 - Package manager: uv (see Python section — no pip, no venv module directly)
 
