@@ -62,9 +62,22 @@ This is not optional. Do not write code directly without ralphael stories. The w
 
 **Always include a test** that would have caught the bug when fixing bugs via ralphael stories.
 
+**Language: Python (Anthropic SDK)**
+
+Ralphael is written in Python, not Go. This was a deliberate choice:
+- The Anthropic Python SDK enables streaming (`contentBlockDelta`), tool_use blocks, and direct token tracking — none of which were possible when shelling out to `claude --print`
+- Python is the primary language for Anthropic SDK integrations; the SDK is most feature-complete here
+- Async orchestration with `asyncio` maps naturally to the parallel story execution model
+- Go offered no meaningful advantage for this workload and actively blocked SDK access
+
+If you are ever tempted to rewrite ralphael in another language, the question to ask is: **does the target language give us better access to the Anthropic SDK?** If not, stay in Python.
+
 **Tooling:**
-- ralphael binary: `~/.local/bin/ralphael` (installed via `GOBIN=~/.local/bin go install .` from `~/code/personal/ralphael`)
-- After any change to ralphael source, reinstall: `cd ~/code/personal/ralphael && GOBIN=~/.local/bin go install .`
+- Source: `~/code/personal/ralphael`
+- Install (dev mode): `cd ~/code/personal/ralphael && uv pip install -e .`
+- After any change to ralphael source, reinstall: `cd ~/code/personal/ralphael && uv pip install -e .`
+- Run tests: `cd ~/code/personal/ralphael && uv run pytest`
+- Package manager: uv (see Python section — no pip, no venv module directly)
 
 **Filing ralphael bugs:**
 - File GitHub issues at https://github.com/rubin-johnson/ralphael
