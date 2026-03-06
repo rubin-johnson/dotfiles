@@ -9,16 +9,18 @@ set -euo pipefail
 DB="$HOME/.claude/token-usage.db"
 
 if [ $# -lt 1 ]; then
-    echo "Usage: token-log <tokens> [notes]"
+    echo "Usage: token-log <tokens> [notes] [model]"
     echo
     echo "Examples:"
     echo "  token-log 45000"
     echo "  token-log 45000 'CPE-5208 EC2 module updates'"
+    echo "  token-log 45000 'EC2 module updates' sonnet"
     exit 1
 fi
 
 TOKENS="$1"
 NOTES="${2:-}"
+MODEL="${3:-}"
 
 # Get last session ID
 LAST_ID=$(sqlite3 "$DB" "SELECT MAX(id) FROM sessions")
@@ -32,7 +34,8 @@ fi
 sqlite3 "$DB" <<EOF
 UPDATE sessions
 SET tokens_total = $TOKENS,
-    notes = '$NOTES'
+    notes = '$NOTES',
+    model = '$MODEL'
 WHERE id = $LAST_ID;
 EOF
 

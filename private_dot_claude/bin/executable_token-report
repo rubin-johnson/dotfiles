@@ -100,12 +100,30 @@ ORDER BY total_tokens DESC;
 EOF
         ;;
 
+    by-model)
+        echo "=== Token Usage by Model ==="
+        echo
+        sqlite3 -column -header "$DB" <<'EOF'
+SELECT
+    COALESCE(NULLIF(model, ''), 'unknown') as model,
+    COUNT(*) as sessions,
+    SUM(tokens_total) as total_tokens,
+    AVG(tokens_total) as avg_tokens,
+    ROUND(SUM(tokens_total) * 100.0 / (SELECT SUM(tokens_total) FROM sessions WHERE tokens_total > 0), 1) as percentage
+FROM sessions
+WHERE tokens_total > 0
+GROUP BY model
+ORDER BY total_tokens DESC;
+EOF
+        ;;
+
     recent)
         echo "=== Recent Sessions (Last 20) ==="
         echo
         sqlite3 -column -header "$DB" <<'EOF'
 SELECT
     timestamp,
+    COALESCE(NULLIF(model, ''), 'unknown') as model,
     category,
     git_repo,
     tokens_total
@@ -211,7 +229,7 @@ EOF
         ;;
 
     *)
-        echo "Usage: token-report [summary|daily|weekly|by-repo|by-category|recent|trends|credits]"
+        echo "Usage: token-report [summary|daily|weekly|by-repo|by-category|by-model|recent|trends|credits]"
         echo
         echo "Available reports:"
         echo "  summary      - Overall statistics"
@@ -219,7 +237,8 @@ EOF
         echo "  weekly       - Weekly breakdown (last 12 weeks)"
         echo "  by-repo      - Token usage per repository"
         echo "  by-category  - Token usage per category"
-        echo "  recent       - Last 20 sessions"
+        echo "  by-model     - Token usage per model"
+        echo "  recent       - Last 20 sessions (includes model)"
         echo "  trends       - 7-day rolling average"
         echo "  credits      - API credit balance and burn rate [account]"
         exit 1

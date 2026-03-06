@@ -26,6 +26,7 @@ CREATE TABLE IF NOT EXISTS sessions (
     tokens_total INTEGER,
     cost_usd REAL,
     account TEXT DEFAULT 'work',
+    model TEXT,
     session_duration_seconds INTEGER,
     notes TEXT
 );
@@ -49,6 +50,7 @@ fi
 # Migrate existing DB: add new columns if missing (fails silently if already present)
 sqlite3 "$DB" "ALTER TABLE sessions ADD COLUMN cost_usd REAL;" 2>/dev/null || true
 sqlite3 "$DB" "ALTER TABLE sessions ADD COLUMN account TEXT DEFAULT 'work';" 2>/dev/null || true
+sqlite3 "$DB" "ALTER TABLE sessions ADD COLUMN model TEXT;" 2>/dev/null || true
 sqlite3 "$DB" "CREATE TABLE IF NOT EXISTS credit_events (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     timestamp TEXT NOT NULL,
@@ -64,8 +66,9 @@ DATE=$(date -u +"%Y-%m-%d")
 WORKING_DIR=$(pwd)
 ACCOUNT="${CLAUDE_ACCOUNT:-work}"
 
-# Extract cost and tokens from hook JSON (fall back to env vars if not present)
+# Extract cost, tokens, and model from hook JSON (fall back to env vars if not present)
 COST_USD=$(echo "$HOOK_INPUT" | jq -r '.cost.total_cost_usd // "0"' 2>/dev/null || echo "0")
+MODEL=$(echo "$HOOK_INPUT" | jq -r '.model // ""' 2>/dev/null || echo "")
 TOTAL_IN=$(echo "$HOOK_INPUT" | jq -r '.context_window.total_input_tokens // 0' 2>/dev/null || echo "0")
 TOTAL_OUT=$(echo "$HOOK_INPUT" | jq -r '.context_window.total_output_tokens // 0' 2>/dev/null || echo "0")
 TOKENS_TOTAL=$(( TOTAL_IN + TOTAL_OUT ))
@@ -101,10 +104,10 @@ esac
 sqlite3 "$DB" <<EOF
 INSERT INTO sessions (
     timestamp, date, working_dir, git_repo, git_branch,
-    category, tokens_total, cost_usd, account, session_duration_seconds, notes
+    category, tokens_total, cost_usd, account, model, session_duration_seconds, notes
 ) VALUES (
     '$TIMESTAMP', '$DATE', '$WORKING_DIR', '$GIT_REPO', '$GIT_BRANCH',
-    '$CATEGORY', $TOKENS_TOTAL, $COST_USD, '$ACCOUNT', $SESSION_DURATION, ''
+    '$CATEGORY', $TOKENS_TOTAL, $COST_USD, '$ACCOUNT', '$MODEL', $SESSION_DURATION, ''
 );
 EOF
 
