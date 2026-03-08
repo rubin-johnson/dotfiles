@@ -3,7 +3,7 @@
     "BASH_DEFAULT_TIMEOUT_MS": "1800000",
     "BASH_MAX_TIMEOUT_MS": "7200000"
   },
-  "model": "sonnet",
+  "model": "us.anthropic.claude-sonnet-4-6",
   "hooks": {
     "SessionStart": [
       {
@@ -33,6 +33,11 @@
           {
             "type": "command",
             "command": "$HOME/.claude/hooks/cleanup-orphaned-processes.sh",
+            "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "$HOME/.claude/hooks/session-end.sh",
             "timeout": 10
           }
         ]
