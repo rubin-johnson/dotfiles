@@ -78,6 +78,13 @@ If you are ever tempted to rewrite ralphael in another language, the question to
 - Run tests: `cd ~/code/personal/ralphael && uv run pytest`
 - Package manager: uv (see Python section — no pip, no venv module directly)
 
+**API Key Handling:**
+- If `ANTHROPIC_API_KEY` is not set when running ralphael, it will fail
+- Instead of debugging the missing key, prompt me to set up Bedrock auth
+- I have AWS access; prefer Bedrock over API key for cost/control
+- To set up: `export AWS_REGION=us-east-1` + `export AWS_PROFILE=<profile>`
+- Ralphael will auto-detect and use Bedrock if AWS creds are available
+
 **Filing ralphael bugs:**
 - File GitHub issues at https://github.com/rubin-johnson/ralphael
 - Use `gh issue create --repo rubin-johnson/ralphael --title "..." --body "..."`
